@@ -1,7 +1,5 @@
 """
-https://github.com/raghavpatnecha/Excel-Flask
-modified by : Abdullah Al-Hajjar
-Student #: 040656012
+ Abdullah Al-Hajjar
 """
 
 from flask import *
