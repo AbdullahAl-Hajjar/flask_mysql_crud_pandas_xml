@@ -1,0 +1,129 @@
+
+<!--https://github.com/raghavpatnecha/Excel-Flask
+modified by : Abdullah Al-Hajjar
+Student #: 040656012-->
+
+
+
+<!doctype html>
+<head>
+<title>Cheese Table</title>
+   <link rel="stylesheet" type="text/css" href="static/style.css"/>
+<link rel=stylesheet type=text/css href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel=stylesheet type=text/css href="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css">
+<!--importing bootstrap templates -->
+</head>
+
+<body>
+
+<input type='button' id="sa" value='Save'></input>
+<h2>Abdullah AL-Hajjar 040656012</h2>
+
+<form action="/results" method="post">
+    <input type='button' id="search" value='Search'></input>
+    <input type="text"   id="searchBar" name="search"></input>
+</form>
+<div >
+  {% for table in tables %}
+    <h2>{{titles[loop.index]}}</h2>
+    {{ table|safe }}
+  {% endfor %}
+</div>
+<!--Loops through the pandas dataframe-->
+
+<form action="/insert" method="post">
+    <label>CheeseId</label> <input type="text" name="0" ></input>
+ <label>CheeseNameEn</label> <input type="text" name="1" ></input>
+  <label>CheeseNameFr</label> <input type="text" name="2" ></input>
+    <label>ManufacturerNameEn</label> <input type="text" name="3" ></input>
+  <label> ManufacturerNameFr</label> <input type="text" name="4" ></input>
+    <label>ManufacturerProvCode</label> <input type="text" name="5" ></input>
+  <label>ManufacturingTypeEn</label> <input type="text" name="6" ></input>
+    <label>ManufacturingTypeFr</label> <input type="text" name="7" ></input>
+  <label>WebSiteEn</label> <input type="text" name="8"></input>
+    <label>WebSiteFr</label> <input type="text" name="9" ></input>
+  <label>FatContentPercent</label> <input type="text" name="10" ></input>
+    <label>MoisturePercent</label> <input type="text" name="11"></input>
+  <label>ParticularitiesEn</label> <input type="text" name="12" ></input>
+    <label>ParticularitiesFr</label> <input type="text" name="13" ></input>
+  <label>FlavourEn</label> <input type="text" name="14" ></input>
+    <label>FlavourFr</label> <input type="text" name="15" ></input>
+  <label>CharacteristicsEn</label> <input type="text" name="16" ></input>
+    <label>CharacteristicsFr</label> <input type="text" name="17" ></input>
+  <label>RipeningEn</label> <input type="text" name="18" ></input>
+    <label>RipeningFr</label> <input type="text" name="19" ></input>
+  <label>Organic</label> <input type="text" name="20" ></input>
+    <label>CategoryTypeEn</label> <input type="text" name="21" ></input>
+  <label> CategoryTypeFr</label> <input type="text" name="22" ></input>
+    <label>MilkTypeEn</label> <input type="text" name="23" p></input>
+  <label>MilkTypeFr</label> <input type="text" name="24" ></input>
+    <label>MilkTreatmentTypeEn</label> <input type="text" name="25" ></input>
+  <label>MilkTreatmentTypeFr</label> <input type="text" name="26" ></input>
+    <label>RindTypeEn</label> <input type="text" name="27" ></input>
+  <label>RindTypeFr</label> <input type="text" name="28" ></input>
+    <label>LastUpdateDate</label> <input type="text" name="29" ></input>
+  <input type="submit" value="Insert"></input>
+</form>
+<!--Creating an html form-->
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"> </script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"> </script>
+<script src="https://cdn.rawgit.com/ejbeaty/CellEdit/master/js/dataTables.cellEdit.js"> </script>
+<!--importing javascript plugins for field edit-->
+<script>
+$(document).ready(function() {
+  var table = $('#example').DataTable({ "iDisplayLength": 100000});
+  table.MakeCellsEditable({
+    "onUpdate": myCallbackFunction
+
+  });
+// <!-- calling upon Datable  and makecells editable with the table object created from the javascript plugins-->
+
+  function myCallbackFunction(updatedCell, updatedRow, oldValue) {
+    console.log("The new value for the cell is: " + updatedCell.data());
+    console.log("The old value for that cell was: " + oldValue);
+    console.log("The values for each cell in that row are: " + updatedRow.data());
+    updatedCell.data();
+    updatedRow.data();
+    table.draw();
+  }
+});
+</script>
+<script>
+$("#sa").click(function() {
+  $.ajax({
+    url: '/save',
+    type: 'POST',
+	data : document.documentElement.innerHTML,
+    success: function(response) {
+      alert('Data is Saved')
+    }
+  })
+});
+// <!--ajax alert and data storage to variable upon clicking the save button-->
+</script>
+<script>
+$("#search").click(function() {
+  $.ajax({
+    url: '/results',
+    type: 'POST',
+	data: document.getElementById('searchBar').value,
+	    success: function(response) {
+      alert('search')
+    }
+  })
+});
+</script>
+</body>
+
+
+</html>
+
+
+
+   
+  
