@@ -1,7 +1,5 @@
 """
     Written by Abdullah Al-Hajjar
-    CST8333
-    Student #040656012
 """
 
 import unittest
